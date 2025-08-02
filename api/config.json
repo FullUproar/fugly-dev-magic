@@ -1,0 +1,51 @@
+{
+  "endpoints": [
+    {
+      "name": "ping",
+      "path": "/api/ping",
+      "method": "GET",
+      "targetPath": "/api/v1/heartbeat",
+      "description": "Check if server is alive"
+    },
+    {
+      "name": "cliStart",
+      "path": "/api/cli/start",
+      "method": "POST",
+      "targetPath": "/api/v1/cli/start",
+      "description": "Start a CLI process (cmd.exe, python, etc)"
+    },
+    {
+      "name": "cliCommand",
+      "path": "/api/cli/command",
+      "method": "POST",
+      "targetPath": "/api/v1/cli/command",
+      "description": "Send a command to the CLI"
+    },
+    {
+      "name": "cliKey",
+      "path": "/api/cli/key",
+      "method": "POST",
+      "targetPath": "/api/v1/cli/key",
+      "description": "Send special keys (up, down, enter, tab)"
+    },
+    {
+      "name": "cliOutput",
+      "path": "/api/cli/output",
+      "method": "GET",
+      "targetPath": "/api/v1/cli/output",
+      "description": "Get recent output from CLI"
+    },
+    {
+      "name": "cliStop",
+      "path": "/api/cli/stop",
+      "method": "POST",
+      "targetPath": "/api/v1/cli/stop",
+      "description": "Stop the current CLI process"
+    }
+  ],
+  "auth": {
+    "gptApiKey": "gpt-client-123",
+    "targetApiKey": "test-key-12345"
+  },
+  "ngrokUrl": "https://8ecb003d0c10.ngrok-free.app"
+}

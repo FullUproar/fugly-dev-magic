@@ -1,0 +1,122 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Home Development Server API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://fugly-dev-magic-odnn26h1y-full-uproar-games.vercel.app"
+    }
+  ],
+  "paths": {
+    "/api/ping": {
+      "get": {
+        "summary": "Check if server is alive",
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cli/start": {
+      "post": {
+        "summary": "Start a CLI process (cmd.exe, python, etc)",
+        "operationId": "cliStart",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cli/command": {
+      "post": {
+        "summary": "Send a command to the CLI",
+        "operationId": "cliCommand",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cli/key": {
+      "post": {
+        "summary": "Send special keys (up, down, enter, tab)",
+        "operationId": "cliKey",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cli/output": {
+      "get": {
+        "summary": "Get recent output from CLI",
+        "operationId": "cliOutput",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cli/stop": {
+      "post": {
+        "summary": "Stop the current CLI process",
+        "operationId": "cliStop",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
