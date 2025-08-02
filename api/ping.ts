@@ -5,6 +5,12 @@ const GPT_API_KEY = 'gpt-client-123'; // key required by GPT to access this rela
 const TARGET_API_KEY = 'test-key-12345'; // key used to access the real server
 const TARGET_URL = 'https://8ecb003d0c10.ngrok-free.app/api/v1/heartbeat';
 
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow GET requests
   if (req.method !== 'GET') {
