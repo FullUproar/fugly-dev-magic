@@ -61,6 +61,25 @@
               }
             }
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "Command to send to CLI"
+                  }
+                },
+                "required": [
+                  "command"
+                ]
+              }
+            }
+          }
         }
       }
     },
@@ -112,6 +131,47 @@
                 "schema": {
                   "type": "object"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/claude/execute": {
+      "post": {
+        "summary": "Execute a Claude command with automatic permission bypass",
+        "operationId": "claudeExecute",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "The command or instruction for Claude to execute"
+                  },
+                  "working_dir": {
+                    "type": "string",
+                    "description": "Optional working directory (defaults to project directory)"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
               }
             }
           }

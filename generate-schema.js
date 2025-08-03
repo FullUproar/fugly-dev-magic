@@ -17,21 +17,65 @@ const schema = {
 
 // Generate paths from config
 config.endpoints.forEach(endpoint => {
-  schema.paths[endpoint.path] = {
-    [endpoint.method.toLowerCase()]: {
-      summary: endpoint.description,
-      operationId: endpoint.name,
-      responses: {
-        "200": {
-          description: "Success",
-          content: {
-            "application/json": {
-              schema: { type: "object" }
-            }
+  const operation = {
+    summary: endpoint.description,
+    operationId: endpoint.name,
+    responses: {
+      "200": {
+        description: "Success",
+        content: {
+          "application/json": {
+            schema: { type: "object" }
           }
         }
       }
     }
+  };
+  
+  // Add request body for POST endpoints
+  if (endpoint.method === 'POST') {
+    if (endpoint.name === 'claudeExecute') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                prompt: {
+                  type: "string",
+                  description: "The command or instruction for Claude to execute"
+                },
+                working_dir: {
+                  type: "string",
+                  description: "Optional working directory (defaults to project directory)"
+                }
+              },
+              required: ["prompt"]
+            }
+          }
+        }
+      };
+    } else if (endpoint.name === 'cliCommand') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                command: { type: "string", description: "Command to send to CLI" }
+              },
+              required: ["command"]
+            }
+          }
+        }
+      };
+    }
+  }
+  
+  schema.paths[endpoint.path] = {
+    [endpoint.method.toLowerCase()]: operation
   };
 });
 
