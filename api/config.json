@@ -48,6 +48,13 @@
       "method": "POST",
       "targetPath": "/api/v1/claude/execute",
       "description": "Execute a Claude command with automatic permission bypass"
+    },
+    {
+      "name": "getProjects",
+      "path": "/api/projects",
+      "method": "GET",
+      "targetPath": "/api/v1/projects",
+      "description": "Get list of available projects"
     }
   ],
   "auth": {

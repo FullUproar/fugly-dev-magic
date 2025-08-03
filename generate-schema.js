@@ -46,9 +46,13 @@ config.endpoints.forEach(endpoint => {
                   type: "string",
                   description: "The command or instruction for Claude to execute"
                 },
+                project: {
+                  type: "string",
+                  description: "Project name (e.g. 'competitive asteroids', 'full uproar site')"
+                },
                 working_dir: {
                   type: "string",
-                  description: "Optional working directory (defaults to project directory)"
+                  description: "Optional: Explicit working directory path (overrides project)"
                 }
               },
               required: ["prompt"]
