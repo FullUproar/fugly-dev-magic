@@ -1,6 +1,9 @@
 {
   "functions": {
-    "api/ping.ts": {
+    "api/relay.ts": {
+      "maxDuration": 10
+    },
+    "api/[...path].ts": {
       "maxDuration": 10
     }
   },
