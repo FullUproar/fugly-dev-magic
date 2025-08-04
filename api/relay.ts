@@ -19,9 +19,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(404).json({ error: 'Endpoint not found' });
   }
 
-  // Verify API key
-  const clientKey = req.headers['x-api-key'];
-  if (clientKey !== GPT_API_KEY) {
+  // Verify API key (supports combined auth token)
+  const authToken = req.headers['x-auth-token'] as string;
+  const clientKey = req.headers['x-api-key'] as string;
+  
+  let authorized = false;
+  let mobileSecret = '';
+  
+  if (authToken && authToken.includes('|')) {
+    // Combined auth token format
+    const [apiKey, secret] = authToken.split('|', 2);
+    authorized = (apiKey === GPT_API_KEY);
+    mobileSecret = secret || '';
+  } else {
+    // Standard API key
+    authorized = (clientKey === GPT_API_KEY);
+    mobileSecret = (req.headers['x-mobile-secret'] as string) || '';
+  }
+  
+  if (!authorized) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 
@@ -37,7 +53,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       method: endpointConfig.method,
       headers: {
         'X-API-Key': TARGET_API_KEY,
-        'X-Mobile-Secret': req.headers['x-mobile-secret'] || '',
+        'X-Mobile-Secret': mobileSecret,
         'Content-Type': 'application/json',
       },
       body: req.body ? JSON.stringify(req.body) : undefined,

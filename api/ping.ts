@@ -21,9 +21,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Verify API key
-  const clientKey = req.headers['x-api-key'];
-  if (clientKey !== GPT_API_KEY) {
+  // Verify API key (supports combined auth token)
+  const authToken = req.headers['x-auth-token'] as string;
+  const clientKey = req.headers['x-api-key'] as string;
+  
+  let authorized = false;
+  if (authToken && authToken.includes('|')) {
+    // Combined auth token format
+    const [apiKey] = authToken.split('|', 2);
+    authorized = (apiKey === GPT_API_KEY);
+  } else {
+    // Standard API key
+    authorized = (clientKey === GPT_API_KEY);
+  }
+  
+  if (!authorized) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 
