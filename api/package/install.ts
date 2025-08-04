@@ -27,6 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       method: 'POST',
       headers: {
         'X-API-Key': TARGET_API_KEY,
+        'X-Mobile-Secret': req.headers['x-mobile-secret'] || '',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(req.body),

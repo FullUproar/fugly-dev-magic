@@ -27,6 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       method: 'GET',
       headers: {
         'X-API-Key': TARGET_API_KEY,
+        'X-Mobile-Secret': req.headers['x-mobile-secret'] || '',
       },
     });
 
