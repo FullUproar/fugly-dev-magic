@@ -145,7 +145,7 @@
     },
     "/api/claude/execute": {
       "post": {
-        "summary": "Execute a Claude command with automatic permission bypass",
+        "summary": "Execute a Claude CLI command to edit code or create files in a project. Use this ONLY for code-related tasks.",
         "operationId": "claudeExecute",
         "responses": {
           "200": {
@@ -210,7 +210,7 @@
     },
     "/api/vercel/status": {
       "get": {
-        "summary": "Get latest Vercel deployment status",
+        "summary": "Get latest Vercel deployment status and check if deployment succeeded or failed",
         "operationId": "vercelStatus",
         "responses": {
           "200": {
@@ -229,7 +229,7 @@
     },
     "/api/github/issue": {
       "post": {
-        "summary": "Create a GitHub issue",
+        "summary": "Create a new GitHub issue in the repository",
         "operationId": "createGithubIssue",
         "responses": {
           "200": {
@@ -278,7 +278,7 @@
     },
     "/api/git/last-push": {
       "get": {
-        "summary": "Get information about the last git push",
+        "summary": "Get information about the last git commit that was pushed to GitHub",
         "operationId": "lastGitPush",
         "responses": {
           "200": {

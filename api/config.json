@@ -47,7 +47,7 @@
       "path": "/api/claude/execute",
       "method": "POST",
       "targetPath": "/api/v1/claude/execute",
-      "description": "Execute a Claude command with automatic permission bypass"
+      "description": "Execute a Claude CLI command to edit code or create files in a project. Use this ONLY for code-related tasks."
     },
     {
       "name": "getProjects",
@@ -61,21 +61,21 @@
       "path": "/api/vercel/status",
       "method": "GET",
       "targetPath": "/api/v1/vercel/status",
-      "description": "Get latest Vercel deployment status"
+      "description": "Get latest Vercel deployment status and check if deployment succeeded or failed"
     },
     {
       "name": "createGithubIssue",
       "path": "/api/github/issue",
       "method": "POST",
       "targetPath": "/api/v1/github/issue",
-      "description": "Create a GitHub issue"
+      "description": "Create a new GitHub issue in the repository"
     },
     {
       "name": "lastGitPush",
       "path": "/api/git/last-push",
       "method": "GET",
       "targetPath": "/api/v1/git/last-push",
-      "description": "Get information about the last git push"
+      "description": "Get information about the last git commit that was pushed to GitHub"
     }
   ],
   "auth": {
