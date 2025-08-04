@@ -76,6 +76,69 @@
       "method": "GET",
       "targetPath": "/api/v1/git/last-push",
       "description": "Get information about the last git commit that was pushed to GitHub"
+    },
+    {
+      "name": "gitStatus",
+      "path": "/api/git/status",
+      "method": "POST",
+      "targetPath": "/api/v1/git/status",
+      "description": "Check git status: see modified files, current branch, and if working directory is clean. Use this to see what files have been changed."
+    },
+    {
+      "name": "gitDiff",
+      "path": "/api/git/diff",
+      "method": "POST",
+      "targetPath": "/api/v1/git/diff",
+      "description": "View git diff to see exact changes made to modified files. Shows line-by-line changes."
+    },
+    {
+      "name": "gitBranchList", 
+      "path": "/api/git/branch",
+      "method": "GET",
+      "targetPath": "/api/v1/git/branch",
+      "description": "List all git branches and see which branch is currently active"
+    },
+    {
+      "name": "gitBranchManage",
+      "path": "/api/git/branch",
+      "method": "POST",
+      "targetPath": "/api/v1/git/branch",
+      "description": "Create a new git branch or switch to an existing branch. Use action='create' for new branch, action='switch' to change branches."
+    },
+    {
+      "name": "packageInstall",
+      "path": "/api/package/install",
+      "method": "POST",
+      "targetPath": "/api/v1/package/install",
+      "description": "Install npm, pip, or yarn packages. Auto-detects package manager or specify with manager field. Use this when user asks to install dependencies."
+    },
+    {
+      "name": "runTests",
+      "path": "/api/test/run",
+      "method": "POST",
+      "targetPath": "/api/v1/test/run",
+      "description": "Run project tests (npm test, pytest, etc). Auto-detects test command or specify custom command. Use this when user asks to run tests."
+    },
+    {
+      "name": "searchFiles",
+      "path": "/api/search/files",
+      "method": "POST",
+      "targetPath": "/api/v1/search/files",
+      "description": "Search for files by name pattern in a project. Use this to find files when you don't know exact location."
+    },
+    {
+      "name": "searchCode",
+      "path": "/api/search/code",
+      "method": "POST",
+      "targetPath": "/api/v1/search/code",
+      "description": "Search for code patterns across all files in project. Use this to find where functions, variables, or text appears in code."
+    },
+    {
+      "name": "deployProject",
+      "path": "/api/deploy",
+      "method": "POST",
+      "targetPath": "/api/v1/deploy",
+      "description": "Deploy project to Vercel. Set production=true for production deployment. Use this when user asks to deploy."
     }
   ],
   "auth": {
