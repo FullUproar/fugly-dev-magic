@@ -23,7 +23,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const targetUrl = `${config.ngrokUrl}${endpointConfig.targetPath}`;
+    const ngrokUrl = process.env.NGROK_URL || config.ngrokUrl;
+    const targetUrl = `${ngrokUrl}${endpointConfig.targetPath}`;
     
     const response = await fetch(targetUrl, {
       method: endpointConfig.method,

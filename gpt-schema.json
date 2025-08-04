@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.1.0",
   "info": {
     "title": "Home Development Server API",
     "version": "1.0.0"
@@ -20,7 +20,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -38,7 +39,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -56,7 +58,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -93,7 +96,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -111,7 +115,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -129,7 +134,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -147,7 +153,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -192,7 +199,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }

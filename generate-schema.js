@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 const config = JSON.parse(readFileSync('./api/config.json', 'utf8'));
 
 const schema = {
-  openapi: "3.0.0",
+  openapi: "3.1.0",
   info: {
     title: "Home Development Server API",
     version: "1.0.0"
@@ -25,7 +25,10 @@ config.endpoints.forEach(endpoint => {
         description: "Success",
         content: {
           "application/json": {
-            schema: { type: "object" }
+            schema: { 
+              type: "object",
+              properties: {}
+            }
           }
         }
       }
