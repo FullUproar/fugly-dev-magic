@@ -4,8 +4,7 @@ import config from './config.json';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Extract endpoint from URL
-  const endpoint = req.url?.replace('/api/', '');
-  const endpointConfig = config.endpoints.find(e => e.path === `/api/${endpoint}`);
+  const endpointConfig = config.endpoints.find(e => e.path === req.url);
   
   if (!endpointConfig) {
     return res.status(404).json({ error: 'Endpoint not found' });
