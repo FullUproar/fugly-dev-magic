@@ -142,8 +142,8 @@
     }
   ],
   "auth": {
-    "gptApiKey": "gpt-client-123",
-    "targetApiKey": "test-key-12345"
+    "gptApiKey": "MUST_BE_SET_IN_ENVIRONMENT",
+    "targetApiKey": "MUST_BE_SET_IN_ENVIRONMENT"
   },
-  "ngrokUrl": "https://3fd457d59f31.ngrok-free.app"
+  "ngrokUrl": "MUST_BE_SET_IN_ENVIRONMENT"
 }

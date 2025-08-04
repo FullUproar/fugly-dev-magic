@@ -1,9 +1,12 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'node-fetch';
 
-const GPT_API_KEY = process.env.GPT_API_KEY || 'gpt-client-123';
-const TARGET_API_KEY = process.env.TARGET_API_KEY || 'test-key-12345';
-const NGROK_URL = process.env.NGROK_URL || 'https://3fd457d59f31.ngrok-free.app';
+const GPT_API_KEY = process.env.GPT_API_KEY;
+if (!GPT_API_KEY) throw new Error('GPT_API_KEY environment variable is required');
+const TARGET_API_KEY = process.env.TARGET_API_KEY;
+if (!TARGET_API_KEY) throw new Error('TARGET_API_KEY environment variable is required');
+const NGROK_URL = process.env.NGROK_URL;
+if (!NGROK_URL) throw new Error('NGROK_URL environment variable is required');
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow POST requests

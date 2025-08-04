@@ -1,9 +1,12 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'node-fetch';
 
-const GPT_API_KEY = process.env.GPT_API_KEY || 'gpt-client-123'; // key required by GPT to access this relay
-const TARGET_API_KEY = process.env.TARGET_API_KEY || 'test-key-12345'; // key used to access the real server
-const NGROK_URL = process.env.NGROK_URL || 'https://8ecb003d0c10.ngrok-free.app';
+const GPT_API_KEY = process.env.GPT_API_KEY;
+if (!GPT_API_KEY) throw new Error('GPT_API_KEY environment variable is required'); // key required by GPT to access this relay
+const TARGET_API_KEY = process.env.TARGET_API_KEY;
+if (!TARGET_API_KEY) throw new Error('TARGET_API_KEY environment variable is required'); // key used to access the real server
+const NGROK_URL = process.env.NGROK_URL;
+if (!NGROK_URL) throw new Error('NGROK_URL environment variable is required');
 const TARGET_URL = `${NGROK_URL}/api/v1/heartbeat`;
 
 export const config = {

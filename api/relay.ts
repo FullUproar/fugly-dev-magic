@@ -2,6 +2,15 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'node-fetch';
 import config from './config.json';
 
+// Get API keys from environment
+const GPT_API_KEY = process.env.GPT_API_KEY;
+const TARGET_API_KEY = process.env.TARGET_API_KEY;
+const NGROK_URL = process.env.NGROK_URL;
+
+if (!GPT_API_KEY || !TARGET_API_KEY || !NGROK_URL) {
+  throw new Error('Required environment variables are not set');
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Extract endpoint from URL
   const endpointConfig = config.endpoints.find(e => e.path === req.url);
@@ -12,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Verify API key
   const clientKey = req.headers['x-api-key'];
-  if (clientKey !== config.auth.gptApiKey) {
+  if (clientKey !== GPT_API_KEY) {
     return res.status(403).json({ error: 'Unauthorized' });
   }
 
@@ -22,13 +31,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const ngrokUrl = process.env.NGROK_URL || config.ngrokUrl;
-    const targetUrl = `${ngrokUrl}${endpointConfig.targetPath}`;
+    const targetUrl = `${NGROK_URL}${endpointConfig.targetPath}`;
     
     const response = await fetch(targetUrl, {
       method: endpointConfig.method,
       headers: {
-        'X-API-Key': config.auth.targetApiKey,
+        'X-API-Key': TARGET_API_KEY,
         'Content-Type': 'application/json',
       },
       body: req.body ? JSON.stringify(req.body) : undefined,
