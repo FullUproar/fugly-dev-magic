@@ -207,6 +207,93 @@
           }
         }
       }
+    },
+    "/api/vercel/status": {
+      "get": {
+        "summary": "Get latest Vercel deployment status",
+        "operationId": "vercelStatus",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/github/issue": {
+      "post": {
+        "summary": "Create a GitHub issue",
+        "operationId": "createGithubIssue",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Issue title"
+                  },
+                  "body": {
+                    "type": "string",
+                    "description": "Issue body/description"
+                  },
+                  "labels": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Optional labels for the issue"
+                  }
+                },
+                "required": [
+                  "title"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/git/last-push": {
+      "get": {
+        "summary": "Get information about the last git push",
+        "operationId": "lastGitPush",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

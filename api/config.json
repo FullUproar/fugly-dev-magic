@@ -55,6 +55,27 @@
       "method": "GET",
       "targetPath": "/api/v1/projects",
       "description": "Get list of available projects"
+    },
+    {
+      "name": "vercelStatus",
+      "path": "/api/vercel/status",
+      "method": "GET",
+      "targetPath": "/api/v1/vercel/status",
+      "description": "Get latest Vercel deployment status"
+    },
+    {
+      "name": "createGithubIssue",
+      "path": "/api/github/issue",
+      "method": "POST",
+      "targetPath": "/api/v1/github/issue",
+      "description": "Create a GitHub issue"
+    },
+    {
+      "name": "lastGitPush",
+      "path": "/api/git/last-push",
+      "method": "GET",
+      "targetPath": "/api/v1/git/last-push",
+      "description": "Get information about the last git push"
     }
   ],
   "auth": {

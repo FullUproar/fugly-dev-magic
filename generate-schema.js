@@ -78,6 +78,27 @@ config.endpoints.forEach(endpoint => {
           }
         }
       };
+    } else if (endpoint.name === 'createGithubIssue') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                title: { type: "string", description: "Issue title" },
+                body: { type: "string", description: "Issue body/description" },
+                labels: { 
+                  type: "array", 
+                  items: { type: "string" },
+                  description: "Optional labels for the issue" 
+                }
+              },
+              required: ["title"]
+            }
+          }
+        }
+      };
     }
   }
   
