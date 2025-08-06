@@ -29,10 +29,10 @@
         }
       }
     },
-    "/api/cli/start": {
+    "/api/claude": {
       "post": {
-        "summary": "Start a CLI process (cmd.exe, python, etc)",
-        "operationId": "cliStart",
+        "summary": "Claude operations. action='execute' for code edits, 'command' for system commands with priority, 'plan' for task planning, 'analyze-page' for web analysis, 'verify-changes' to check implementations",
+        "operationId": "claude",
         "responses": {
           "200": {
             "description": "Success",
@@ -48,48 +48,10 @@
         }
       }
     },
-    "/api/cli/command": {
+    "/api/git": {
       "post": {
-        "summary": "Send a command to the CLI",
-        "operationId": "cliCommand",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "command": {
-                    "type": "string",
-                    "description": "Command to send to CLI"
-                  }
-                },
-                "required": [
-                  "command"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/cli/key": {
-      "post": {
-        "summary": "Send special keys (up, down, enter, tab)",
-        "operationId": "cliKey",
+        "summary": "Git operations. action='status', 'branch' (with subAction create/switch), 'commit', 'push', 'diff'",
+        "operationId": "git",
         "responses": {
           "200": {
             "description": "Success",
@@ -105,93 +67,142 @@
         }
       }
     },
-    "/api/cli/output": {
+    "/api/project": {
+      "post": {
+        "summary": "Project operations. action='list' to get projects, 'npm-install' for packages, 'test' to run tests, 'deploy' for Vercel, 'search' for files",
+        "operationId": "project",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/page": {
+      "post": {
+        "summary": "Page analysis. action='capture' for screenshots, 'compare' for before/after, 'debug-monitor' for errors, 'monitor-journey' for user flows, 'analyze-multiple' for responsive testing",
+        "operationId": "page",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/state": {
+      "post": {
+        "summary": "State management. type='conversation', 'project', 'settings'. Use operation='get' or 'update'",
+        "operationId": "state",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/queue": {
+      "post": {
+        "summary": "Command queue. action='status', 'command' (with commandId), 'cancel'",
+        "operationId": "queue",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cli": {
+      "post": {
+        "summary": "CLI control. action='start', 'command', 'output', 'stop', 'key'",
+        "operationId": "cli",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logs": {
+      "post": {
+        "summary": "Logging. type='recent' for recent activity, 'summary' for daily summary",
+        "operationId": "logs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/watchdog": {
+      "post": {
+        "summary": "Process monitoring. action='status' to check processes, 'extend' to extend timeout",
+        "operationId": "watchdog",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/list": {
       "get": {
-        "summary": "Get recent output from CLI",
-        "operationId": "cliOutput",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/cli/stop": {
-      "post": {
-        "summary": "Stop the current CLI process",
-        "operationId": "cliStop",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/claude/execute": {
-      "post": {
-        "summary": "Execute a Claude CLI command to edit code or create files in a project. Use this ONLY for code-related tasks.",
-        "operationId": "claudeExecute",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "prompt": {
-                    "type": "string",
-                    "description": "The command or instruction for Claude to execute"
-                  },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name (e.g. 'competitive asteroids', 'full uproar site')"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Optional: Explicit working directory path (overrides project)"
-                  }
-                },
-                "required": [
-                  "prompt"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects": {
-      "get": {
-        "summary": "Get list of available projects",
+        "summary": "Get list of all available projects",
         "operationId": "getProjects",
         "responses": {
           "200": {
@@ -208,10 +219,10 @@
         }
       }
     },
-    "/api/vercel/status": {
+    "/api/queue/status": {
       "get": {
-        "summary": "Get latest Vercel deployment status and check if deployment succeeded or failed",
-        "operationId": "vercelStatus",
+        "summary": "Get current command queue status",
+        "operationId": "getQueueStatus",
         "responses": {
           "200": {
             "description": "Success",
@@ -227,10 +238,124 @@
         }
       }
     },
-    "/api/github/issue": {
+    "/api/logs/recent": {
+      "get": {
+        "summary": "Get recent activity logs",
+        "operationId": "getRecentLogs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/quick/analyze": {
       "post": {
-        "summary": "Create a new GitHub issue in the repository",
-        "operationId": "createGithubIssue",
+        "summary": "Quick page analysis. Pass url or project='fu' for Full Uproar",
+        "operationId": "quickAnalyze",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/quick/debug": {
+      "post": {
+        "summary": "Quick debug check for console errors. Pass url or project='fu'",
+        "operationId": "quickDebug",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/execute": {
+      "post": {
+        "summary": "Execute any command with priority. The main way to run commands.",
+        "operationId": "executeCommand",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/code/edit": {
+      "post": {
+        "summary": "Edit code files using Claude. The main way to modify code.",
+        "operationId": "codeEdit",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "post": {
+        "summary": "Search for files or code. Pass pattern for files, or use type='code' with query",
+        "operationId": "search",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/claude/plan": {
+      "post": {
+        "summary": "Ask Claude to create a development plan without implementing code. Use this for planning complex tasks, architecture decisions, or implementation strategies.",
+        "operationId": "claudePlan",
         "responses": {
           "200": {
             "description": "Success",
@@ -251,235 +376,151 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "title": {
+                  "task": {
                     "type": "string",
-                    "description": "Issue title"
+                    "description": "Task or problem to plan"
                   },
-                  "body": {
+                  "project": {
                     "type": "string",
-                    "description": "Issue body/description"
+                    "description": "Project name"
                   },
-                  "labels": {
+                  "working_dir": {
+                    "type": "string",
+                    "description": "Working directory path"
+                  },
+                  "conversation_id": {
+                    "type": "string",
+                    "description": "Optional: Continue existing conversation"
+                  }
+                },
+                "required": [
+                  "task"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/state/conversation": {
+      "post": {
+        "summary": "Add messages or update conversation state",
+        "operationId": "updateConversation",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "conversation_id": {
+                    "type": "string",
+                    "description": "Conversation ID"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "Message to add"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "user",
+                      "assistant"
+                    ],
+                    "description": "Message role"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "normal",
+                      "planning"
+                    ],
+                    "description": "Conversation mode"
+                  },
+                  "context": {
+                    "type": "object",
+                    "description": "Additional context data"
+                  }
+                },
+                "required": [
+                  "conversation_id"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/state/project": {
+      "post": {
+        "summary": "Update project state with current branch, working files, or todo list",
+        "operationId": "updateProjectState",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Project path"
+                  },
+                  "last_command": {
+                    "type": "string",
+                    "description": "Last executed command"
+                  },
+                  "current_branch": {
+                    "type": "string",
+                    "description": "Current git branch"
+                  },
+                  "working_files": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Optional labels for the issue"
-                  }
-                },
-                "required": [
-                  "title"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/git/last-push": {
-      "get": {
-        "summary": "Get information about the last git commit that was pushed to GitHub",
-        "operationId": "lastGitPush",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/git/status": {
-      "post": {
-        "summary": "Check git status: see modified files, current branch, and if working directory is clean. Use this to see what files have been changed.",
-        "operationId": "gitStatus",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "project": {
-                    "type": "string",
-                    "description": "Project name to check"
+                    "description": "List of working files"
                   },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/git/diff": {
-      "post": {
-        "summary": "View git diff to see exact changes made to modified files. Shows line-by-line changes.",
-        "operationId": "gitDiff",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "project": {
-                    "type": "string",
-                    "description": "Project name to check"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/git/branch": {
-      "post": {
-        "summary": "Create a new git branch or switch to an existing branch. Use action='create' for new branch, action='switch' to change branches.",
-        "operationId": "gitBranchManage",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "action": {
-                    "type": "string",
-                    "enum": [
-                      "create",
-                      "switch"
-                    ],
-                    "description": "Action to perform"
-                  },
-                  "branch": {
-                    "type": "string",
-                    "description": "Branch name"
-                  },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
-                  }
-                },
-                "required": [
-                  "action",
-                  "branch"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/package/install": {
-      "post": {
-        "summary": "Install npm, pip, or yarn packages. Auto-detects package manager or specify with manager field. Use this when user asks to install dependencies.",
-        "operationId": "packageInstall",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "packages": {
+                  "todo_list": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Package names to install"
+                    "description": "Project todo list"
                   },
-                  "manager": {
+                  "notes": {
                     "type": "string",
-                    "enum": [
-                      "npm",
-                      "pip",
-                      "yarn",
-                      "auto"
-                    ],
-                    "description": "Package manager (auto-detect if not specified)"
-                  },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
+                    "description": "Project notes"
                   }
                 },
                 "required": [
-                  "packages"
+                  "path"
                 ]
               }
             }
@@ -487,53 +528,10 @@
         }
       }
     },
-    "/api/test/run": {
+    "/api/v1/state/settings": {
       "post": {
-        "summary": "Run project tests (npm test, pytest, etc). Auto-detects test command or specify custom command. Use this when user asks to run tests.",
-        "operationId": "runTests",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "command": {
-                    "type": "string",
-                    "description": "Custom test command (auto-detected if not provided)"
-                  },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/search/files": {
-      "post": {
-        "summary": "Search for files by name pattern in a project. Use this to find files when you don't know exact location.",
-        "operationId": "searchFiles",
+        "summary": "Update system settings",
+        "operationId": "updateSettings",
         "responses": {
           "200": {
             "description": "Success",
@@ -554,21 +552,17 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "pattern": {
+                  "key": {
                     "type": "string",
-                    "description": "File name pattern to search for"
+                    "description": "Setting key"
                   },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
+                  "value": {
+                    "description": "Setting value (any type)"
                   }
                 },
                 "required": [
-                  "pattern"
+                  "key",
+                  "value"
                 ]
               }
             }
@@ -576,10 +570,10 @@
         }
       }
     },
-    "/api/search/code": {
-      "post": {
-        "summary": "Search for code patterns across all files in project. Use this to find where functions, variables, or text appears in code.",
-        "operationId": "searchCode",
+    "/api/v1/queue/status": {
+      "get": {
+        "summary": "Get command queue status with GPT-friendly summary. Shows queued commands, running commands, and wait times.",
+        "operationId": "getQueueStatus",
         "responses": {
           "200": {
             "description": "Success",
@@ -592,44 +586,13 @@
               }
             }
           }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "pattern": {
-                    "type": "string",
-                    "description": "Code pattern to search for"
-                  },
-                  "file_pattern": {
-                    "type": "string",
-                    "description": "File pattern to search in (e.g., '*.js')"
-                  },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
-                  }
-                },
-                "required": [
-                  "pattern"
-                ]
-              }
-            }
-          }
         }
       }
     },
-    "/api/deploy": {
-      "post": {
-        "summary": "Deploy project to Vercel. Set production=true for production deployment. Use this when user asks to deploy.",
-        "operationId": "deployProject",
+    "/api/v1/queue/command/{command_id}": {
+      "get": {
+        "summary": "Get status of a specific queued command",
+        "operationId": "getCommandStatus",
         "responses": {
           "200": {
             "description": "Success",
@@ -642,26 +605,21 @@
               }
             }
           }
-        },
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "production": {
-                    "type": "boolean",
-                    "description": "Deploy to production (default: false)"
-                  },
-                  "project": {
-                    "type": "string",
-                    "description": "Project name"
-                  },
-                  "working_dir": {
-                    "type": "string",
-                    "description": "Working directory path"
-                  }
+        }
+      }
+    },
+    "/api/v1/queue/command/{command_id}/cancel": {
+      "post": {
+        "summary": "Cancel a queued command (only works if not yet running)",
+        "operationId": "cancelCommand",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }

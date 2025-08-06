@@ -47,7 +47,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const targetUrl = `${NGROK_URL}${endpointConfig.targetPath}`;
+    let targetPath = endpointConfig.targetPath;
+    
+    // Handle dynamic paths - replace {action} with the action from request body
+    if (endpointConfig.dynamicPath && req.body) {
+      const body = req.body as any;
+      if (body.action && targetPath.includes('{action}')) {
+        targetPath = targetPath.replace('{action}', body.action);
+      }
+      if (body.type && targetPath.includes('{type}')) {
+        targetPath = targetPath.replace('{type}', body.type);
+      }
+    }
+    
+    const targetUrl = `${NGROK_URL}${targetPath}`;
     
     const response = await fetch(targetUrl, {
       method: endpointConfig.method,

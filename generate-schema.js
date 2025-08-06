@@ -2,6 +2,10 @@ import fs from 'fs';
 import { readFileSync } from 'fs';
 
 const config = JSON.parse(readFileSync('./api/config.json', 'utf8'));
+const planningConfig = JSON.parse(readFileSync('./api/config-planning.json', 'utf8'));
+
+// Merge endpoints
+config.endpoints = [...config.endpoints, ...planningConfig.endpoints];
 
 const schema = {
   openapi: "3.1.0",
@@ -34,6 +38,33 @@ config.endpoints.forEach(endpoint => {
       }
     }
   };
+  
+  // Add query parameters for GET endpoints
+  if (endpoint.method === 'GET') {
+    if (endpoint.name === 'getConversations') {
+      operation.parameters = [{
+        name: "id",
+        in: "query",
+        description: "Specific conversation ID (returns all recent if not provided)",
+        schema: { type: "string" }
+      }];
+    } else if (endpoint.name === 'getProjectState') {
+      operation.parameters = [{
+        name: "path",
+        in: "query",
+        description: "Project path",
+        required: true,
+        schema: { type: "string" }
+      }];
+    } else if (endpoint.name === 'getSettings') {
+      operation.parameters = [{
+        name: "key",
+        in: "query",
+        description: "Specific setting key (returns common settings if not provided)",
+        schema: { type: "string" }
+      }];
+    }
+  }
   
   // Add request body for POST endpoints
   if (endpoint.method === 'POST') {
@@ -217,6 +248,79 @@ config.endpoints.forEach(endpoint => {
                 project: { type: "string", description: "Project name" },
                 working_dir: { type: "string", description: "Working directory path" }
               }
+            }
+          }
+        }
+      };
+    } else if (endpoint.name === 'claudePlan') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                task: { type: "string", description: "Task or problem to plan" },
+                project: { type: "string", description: "Project name" },
+                working_dir: { type: "string", description: "Working directory path" },
+                conversation_id: { type: "string", description: "Optional: Continue existing conversation" }
+              },
+              required: ["task"]
+            }
+          }
+        }
+      };
+    } else if (endpoint.name === 'updateConversation') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                conversation_id: { type: "string", description: "Conversation ID" },
+                message: { type: "string", description: "Message to add" },
+                role: { type: "string", enum: ["user", "assistant"], description: "Message role" },
+                mode: { type: "string", enum: ["normal", "planning"], description: "Conversation mode" },
+                context: { type: "object", description: "Additional context data" }
+              },
+              required: ["conversation_id"]
+            }
+          }
+        }
+      };
+    } else if (endpoint.name === 'updateProjectState') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                path: { type: "string", description: "Project path" },
+                last_command: { type: "string", description: "Last executed command" },
+                current_branch: { type: "string", description: "Current git branch" },
+                working_files: { type: "array", items: { type: "string" }, description: "List of working files" },
+                todo_list: { type: "array", items: { type: "string" }, description: "Project todo list" },
+                notes: { type: "string", description: "Project notes" }
+              },
+              required: ["path"]
+            }
+          }
+        }
+      };
+    } else if (endpoint.name === 'updateSettings') {
+      operation.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                key: { type: "string", description: "Setting key" },
+                value: { description: "Setting value (any type)" }
+              },
+              required: ["key", "value"]
             }
           }
         }

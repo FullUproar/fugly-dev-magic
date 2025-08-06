@@ -8,137 +8,132 @@
       "description": "Check if server is alive"
     },
     {
-      "name": "cliStart",
-      "path": "/api/cli/start",
+      "name": "claude",
+      "path": "/api/claude",
       "method": "POST",
-      "targetPath": "/api/v1/cli/start",
-      "description": "Start a CLI process (cmd.exe, python, etc)"
+      "targetPath": "/api/v1/claude/{action}",
+      "description": "Claude operations. action='execute' for code edits, 'command' for system commands with priority, 'plan' for task planning, 'analyze-page' for web analysis, 'verify-changes' to check implementations",
+      "dynamicPath": true
     },
     {
-      "name": "cliCommand",
-      "path": "/api/cli/command",
+      "name": "git",
+      "path": "/api/git",
       "method": "POST",
-      "targetPath": "/api/v1/cli/command",
-      "description": "Send a command to the CLI"
+      "targetPath": "/api/v1/git/{action}",
+      "description": "Git operations. action='status', 'branch' (with subAction create/switch), 'commit', 'push', 'diff'",
+      "dynamicPath": true
     },
     {
-      "name": "cliKey",
-      "path": "/api/cli/key",
+      "name": "project",
+      "path": "/api/project",
       "method": "POST",
-      "targetPath": "/api/v1/cli/key",
-      "description": "Send special keys (up, down, enter, tab)"
+      "targetPath": "/api/v1/project/{action}",
+      "description": "Project operations. action='list' to get projects, 'npm-install' for packages, 'test' to run tests, 'deploy' for Vercel, 'search' for files",
+      "dynamicPath": true
     },
     {
-      "name": "cliOutput",
-      "path": "/api/cli/output",
-      "method": "GET",
-      "targetPath": "/api/v1/cli/output",
-      "description": "Get recent output from CLI"
+      "name": "page",
+      "path": "/api/page",
+      "method": "POST",
+      "targetPath": "/api/v1/page/{action}",
+      "description": "Page analysis. action='capture' for screenshots, 'compare' for before/after, 'debug-monitor' for errors, 'monitor-journey' for user flows, 'analyze-multiple' for responsive testing",
+      "dynamicPath": true
     },
     {
-      "name": "cliStop",
-      "path": "/api/cli/stop",
+      "name": "state",
+      "path": "/api/state",
       "method": "POST",
-      "targetPath": "/api/v1/cli/stop",
-      "description": "Stop the current CLI process"
+      "targetPath": "/api/v1/state/{type}",
+      "description": "State management. type='conversation', 'project', 'settings'. Use operation='get' or 'update'",
+      "dynamicPath": true
     },
     {
-      "name": "claudeExecute",
-      "path": "/api/claude/execute",
+      "name": "queue",
+      "path": "/api/queue",
       "method": "POST",
-      "targetPath": "/api/v1/claude/execute",
-      "description": "Execute a Claude CLI command to edit code or create files in a project. Use this ONLY for code-related tasks."
+      "targetPath": "/api/v1/queue/{action}",
+      "description": "Command queue. action='status', 'command' (with commandId), 'cancel'",
+      "dynamicPath": true
+    },
+    {
+      "name": "cli",
+      "path": "/api/cli",
+      "method": "POST",
+      "targetPath": "/api/v1/cli/{action}",
+      "description": "CLI control. action='start', 'command', 'output', 'stop', 'key'",
+      "dynamicPath": true
+    },
+    {
+      "name": "logs",
+      "path": "/api/logs",
+      "method": "POST",
+      "targetPath": "/api/v1/logs/{type}",
+      "description": "Logging. type='recent' for recent activity, 'summary' for daily summary",
+      "dynamicPath": true
+    },
+    {
+      "name": "watchdog",
+      "path": "/api/watchdog",
+      "method": "POST",
+      "targetPath": "/api/v1/watchdog/{action}",
+      "description": "Process monitoring. action='status' to check processes, 'extend' to extend timeout",
+      "dynamicPath": true
     },
     {
       "name": "getProjects",
-      "path": "/api/projects",
+      "path": "/api/projects/list",
       "method": "GET",
-      "targetPath": "/api/v1/projects",
-      "description": "Get list of available projects"
+      "targetPath": "/api/v1/project/list",
+      "description": "Get list of all available projects"
     },
     {
-      "name": "vercelStatus",
-      "path": "/api/vercel/status",
+      "name": "getQueueStatus",
+      "path": "/api/queue/status",
       "method": "GET",
-      "targetPath": "/api/v1/vercel/status",
-      "description": "Get latest Vercel deployment status and check if deployment succeeded or failed"
+      "targetPath": "/api/v1/queue/status",
+      "description": "Get current command queue status"
     },
     {
-      "name": "createGithubIssue",
-      "path": "/api/github/issue",
-      "method": "POST",
-      "targetPath": "/api/v1/github/issue",
-      "description": "Create a new GitHub issue in the repository"
-    },
-    {
-      "name": "lastGitPush",
-      "path": "/api/git/last-push",
+      "name": "getRecentLogs",
+      "path": "/api/logs/recent",
       "method": "GET",
-      "targetPath": "/api/v1/git/last-push",
-      "description": "Get information about the last git commit that was pushed to GitHub"
+      "targetPath": "/api/v1/logs/recent",
+      "description": "Get recent activity logs"
     },
     {
-      "name": "gitStatus",
-      "path": "/api/git/status",
+      "name": "quickAnalyze",
+      "path": "/api/quick/analyze",
       "method": "POST",
-      "targetPath": "/api/v1/git/status",
-      "description": "Check git status: see modified files, current branch, and if working directory is clean. Use this to see what files have been changed."
+      "targetPath": "/api/v1/claude/analyze-page",
+      "description": "Quick page analysis. Pass url or project='fu' for Full Uproar"
     },
     {
-      "name": "gitDiff",
-      "path": "/api/git/diff",
+      "name": "quickDebug",
+      "path": "/api/quick/debug",
       "method": "POST",
-      "targetPath": "/api/v1/git/diff",
-      "description": "View git diff to see exact changes made to modified files. Shows line-by-line changes."
+      "targetPath": "/api/v1/page/debug-monitor",
+      "description": "Quick debug check for console errors. Pass url or project='fu'"
     },
     {
-      "name": "gitBranchList", 
-      "path": "/api/git/branch",
-      "method": "GET",
-      "targetPath": "/api/v1/git/branch",
-      "description": "List all git branches and see which branch is currently active"
-    },
-    {
-      "name": "gitBranchManage",
-      "path": "/api/git/branch",
+      "name": "executeCommand",
+      "path": "/api/execute",
       "method": "POST",
-      "targetPath": "/api/v1/git/branch",
-      "description": "Create a new git branch or switch to an existing branch. Use action='create' for new branch, action='switch' to change branches."
+      "targetPath": "/api/v1/claude/command",
+      "description": "Execute any command with priority. The main way to run commands."
     },
     {
-      "name": "packageInstall",
-      "path": "/api/package/install",
+      "name": "codeEdit",
+      "path": "/api/code/edit",
       "method": "POST",
-      "targetPath": "/api/v1/package/install",
-      "description": "Install npm, pip, or yarn packages. Auto-detects package manager or specify with manager field. Use this when user asks to install dependencies."
+      "targetPath": "/api/v1/claude/execute",
+      "description": "Edit code files using Claude. The main way to modify code."
     },
     {
-      "name": "runTests",
-      "path": "/api/test/run",
+      "name": "search",
+      "path": "/api/search",
       "method": "POST",
-      "targetPath": "/api/v1/test/run",
-      "description": "Run project tests (npm test, pytest, etc). Auto-detects test command or specify custom command. Use this when user asks to run tests."
-    },
-    {
-      "name": "searchFiles",
-      "path": "/api/search/files",
-      "method": "POST",
-      "targetPath": "/api/v1/search/files",
-      "description": "Search for files by name pattern in a project. Use this to find files when you don't know exact location."
-    },
-    {
-      "name": "searchCode",
-      "path": "/api/search/code",
-      "method": "POST",
-      "targetPath": "/api/v1/search/code",
-      "description": "Search for code patterns across all files in project. Use this to find where functions, variables, or text appears in code."
-    },
-    {
-      "name": "deployProject",
-      "path": "/api/deploy",
-      "method": "POST",
-      "targetPath": "/api/v1/deploy",
-      "description": "Deploy project to Vercel. Set production=true for production deployment. Use this when user asks to deploy."
+      "targetPath": "/api/v1/file/search",
+      "description": "Search for files or code. Pass pattern for files, or use type='code' with query"
     }
   ],
   "auth": {

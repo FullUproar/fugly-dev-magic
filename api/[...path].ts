@@ -8,6 +8,22 @@ if (!TARGET_API_KEY) throw new Error('TARGET_API_KEY environment variable is req
 const NGROK_URL = process.env.NGROK_URL;
 if (!NGROK_URL) throw new Error('NGROK_URL environment variable is required');
 
+function getAuthHeaders(req: VercelRequest): Record<string, string> {
+  const headers: Record<string, string> = {};
+  
+  // Check for combined auth token
+  const authToken = req.headers['x-auth-token'] as string;
+  if (authToken) {
+    // Forward the combined auth token as-is
+    headers['X-Auth-Token'] = authToken;
+  } else {
+    // Use the target API key
+    headers['X-API-Key'] = TARGET_API_KEY;
+  }
+  
+  return headers;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Verify API key (supports combined auth token)
   const authToken = req.headers['x-auth-token'] as string;
