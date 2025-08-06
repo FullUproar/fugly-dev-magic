@@ -1,9 +1,9 @@
 {
   "functions": {
-    "api/relay.ts": {
+    "api/*.ts": {
       "maxDuration": 10
     },
-    "api/[...path].ts": {
+    "api/**/*.ts": {
       "maxDuration": 10
     }
   },
